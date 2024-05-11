@@ -8,11 +8,45 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <title>perfil de christian</title>
+        <link href="https://fonts.cdnfonts.com/css/skuer" rel="stylesheet">
+                
+    <title>Peliculas de Christian</title>
 
 </head>
-<body>
-    <div style="margin :24px;">
+    <body>
+        <style>
+            *{
+                box-sizing: border-box;
+            }
+            body{
+                background-color: aqua;
+                font-family: 'Times New Roman', Times, serif;
+                margin: 0;
+            }
+            header{
+                padding: 10px;
+                display: flex;
+                justify-content: flex-end;
+                background-color: black;
+            }
+            #search{
+                background-color:transparent;
+                border: 2px solid blue;
+                border-radius: 50px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                font-size: 12px;
+                padding: 15px 15px;
+                color: white;
+            }
+            #search::placeholder{
+                color:cornflowerblue;
+            }
+            #search:focus{
+                outline: none;
+                background-color: white;
+            }
+        </style>
+       <div style="margin :24px;">
         <nav class="nav navbar-light" style ="background-color: black;"> 
             <div class="container">
                 <a class="navbar-brand" href="index.html" style="color: aqua;">INICIO</a>
@@ -69,65 +103,55 @@
                 </div>
             </div>
         </nav>
-
+    
     </div>
-    <style>
-        body{
-            background-color:#0a1b15 ;
-            font-family: Arial, Helvetica, sans-serif;
-            color: rgb(240, 238, 245);/*esto es e color para la letra*/
-            text-align: center;
-        }
-        .perfil{
-            margin: 20px auto;
-            width: 80%;
-            max-width: 600px;
-            background-color: black;
-            padding: 20px;
-            box-shadow: 0 0 10px black;
 
-        }
-        .foto-perfil {
-            width: 150px;
-            height: auto;
-            border-radius: 50%;
-            margin: 0 auto;
-            display: block;
+    <header>
+        <input type="text" id="search" class="search" placeholder="Buscar Peliculas">
 
-        }
-        ul{
-            list-style: circle;
-            padding: right;
-        }
-    </style>
-    <div class="perfil">
-        <img src="lobo.jpeg".alt="el lobo sopla y tumba la casa mami" class="foto-perfil">
-        <h1 id="nombre">CHRISTIAN YUREN</h1>
-        <h3 id="especialidad">Especialidad de cetis:PROGRAMACION </h3>
-        <h2>gustos personales:VOLEIBOL</h2>
-        <ul>
-            <li id="musica">Musica favorita:JUNIOR h</li>
-            <li id="programa">Programa favoritos:THE WALKING DEAD</li>
-        </ul>
-        <h2>Informacion de contacto </h2>
-        <p id="">Telefono=899 469 1272</p>
-        <p id="">Correo:chrisXs¿dark23321@gmail.com</p>
-        <p id="">Biografia:Hola soy chcico muy alto mido 1.86 peso 70 kilos voy en la prepa voy a rh y son puros hombres y esa s mi vida</p>
-
-    </div>
+    </header>
+    <main id="main"></main>
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('Nombre').textContent="christian yuren";
-            document.getElementById('Especialidad').textContent="programacion";
-            document.getElementById('Musica').textContent="junior h";
-            document.getElementById('Nombre').textContent="christian yuren";
-            document.getElementById('Programas').textContent="the walking dead,futbol";
-            document.getElementById('Telefono').textContent="899 469 1272";
-            document.getElementById('Correo').textContent="chrisXs¿dark23321@gmail.com";
-            document.getElementById('Biografia').textContent="Hola soy chcico muy alto mido 1.86 peso 70 kilos voy en la prepa voy a rh y son puros hombres y esa s mi vida";
-            
-        })
-    </script>
+        const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1&#39';
+        const IMG_PATH = 'https://image.tmdb.org/t/p/w1280&#39';
+        const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="&#39';
 
+        const main = document.getElementById('main');
+        const form = document.getElementById('form');
+        const seacrh = document.getElementById('seacrh');
+
+        //obtencion de las primeras peliculas 
+
+        getMovies(API_URL)
+
+async function getMovies(url){
+    const res = await fetch(url);
+    const data = awaitres.json();
+
+    showMovies(data.results)
+}
+function showMovies(movies){
+    main.innerHTML ='';
+
+    movies.forEach((movie) =>{
+        const {title, poster_path, vote_avarage,overview} = movie;
+        const MovieElements = document.createElement ('div');
+        MovieElements.classList.add('movie');
+        MovieElements.innerHTML= `
+        <img src  ="${IMG_PATH + poster_path}" alt = "${title}">
+        <div class ="movie-info">   
+            <h3>${title}</h3>
+            <span class = ${getClassByRate(vote_avarage)}>${vote_avarage}</span>
+            </div>
+            <div class = "overview">
+                <h3>Overiew</h3>
+                ${overview}
+                </div>
+                main.AppendChild(movieElements);
+            
+                ;
+    })
+}
+    </script>
 </body>
 </html>

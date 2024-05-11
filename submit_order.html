@@ -8,11 +8,72 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <title>perfil de christian</title>
+        <link href="https://fonts.cdnfonts.com/css/skuer" rel="stylesheet">
+                
+    <title>review</title>
 
 </head>
-<body>
-    <div style="margin :24px;">
+    <body>
+        <style>
+            body{
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+                background-color: azure;
+                margin: 0;
+                padding: 20px;
+                color: gray;
+            }
+            h1{
+                color:black;
+                text-shadow: 5px 5px aqua;
+                text-align: center;
+            }
+            form, #resumenpedido{
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px #8d9d9d;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        input[type="text"],input[type="email"]
+        select{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 16px;
+            border: 1px solid white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button{
+            background-color: blue;
+            color: black;
+            padding: 14px  20px;
+            margin: 0px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover{
+            background-color: aqua;
+        }
+        hr{
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid white;
+        }
+        #resumenpedido p{
+            font-size: 16px;
+            line-height: 1.5;
+            padding: 8px;
+            border-bottom: 1px solid white;         
+        }
+        #resumenpedido p:last-child{
+            border-bottom: none;
+        }
+        </style>
+       <div style="margin :24px;">
         <nav class="nav navbar-light" style ="background-color: black;"> 
             <div class="container">
                 <a class="navbar-brand" href="index.html" style="color: aqua;">INICIO</a>
@@ -69,65 +130,20 @@
                 </div>
             </div>
         </nav>
-
     </div>
-    <style>
-        body{
-            background-color:#0a1b15 ;
-            font-family: Arial, Helvetica, sans-serif;
-            color: rgb(240, 238, 245);/*esto es e color para la letra*/
-            text-align: center;
-        }
-        .perfil{
-            margin: 20px auto;
-            width: 80%;
-            max-width: 600px;
-            background-color: black;
-            padding: 20px;
-            box-shadow: 0 0 10px black;
-
-        }
-        .foto-perfil {
-            width: 150px;
-            height: auto;
-            border-radius: 50%;
-            margin: 0 auto;
-            display: block;
-
-        }
-        ul{
-            list-style: circle;
-            padding: right;
-        }
-    </style>
-    <div class="perfil">
-        <img src="lobo.jpeg".alt="el lobo sopla y tumba la casa mami" class="foto-perfil">
-        <h1 id="nombre">CHRISTIAN YUREN</h1>
-        <h3 id="especialidad">Especialidad de cetis:PROGRAMACION </h3>
-        <h2>gustos personales:VOLEIBOL</h2>
-        <ul>
-            <li id="musica">Musica favorita:JUNIOR h</li>
-            <li id="programa">Programa favoritos:THE WALKING DEAD</li>
-        </ul>
-        <h2>Informacion de contacto </h2>
-        <p id="">Telefono=899 469 1272</p>
-        <p id="">Correo:chrisXs¿dark23321@gmail.com</p>
-        <p id="">Biografia:Hola soy chcico muy alto mido 1.86 peso 70 kilos voy en la prepa voy a rh y son puros hombres y esa s mi vida</p>
-
-    </div>
+    <h1>Resumen del pedido</h1>
+    <div id="resumenpedido"></div>
     <script>
-        document.addEventListener('DOMContentLoaded', function(){
-            document.getElementById('Nombre').textContent="christian yuren";
-            document.getElementById('Especialidad').textContent="programacion";
-            document.getElementById('Musica').textContent="junior h";
-            document.getElementById('Nombre').textContent="christian yuren";
-            document.getElementById('Programas').textContent="the walking dead,futbol";
-            document.getElementById('Telefono').textContent="899 469 1272";
-            document.getElementById('Correo').textContent="chrisXs¿dark23321@gmail.com";
-            document.getElementById('Biografia').textContent="Hola soy chcico muy alto mido 1.86 peso 70 kilos voy en la prepa voy a rh y son puros hombres y esa s mi vida";
-            
-        })
+        window.onload=function(){
+            const params=new URLSearchParams(window.location.search);
+            const resumenpedido=document.getElementById(`resumenpedido`);
+            for(const [key,value] of params.entries()){
+                const detail=document.createElement(`p`);
+                detail.textContent=`${key}:${value}`;
+                resumenpedido.appendChild(detail);
+            }
+        };
     </script>
-
-</body>
-</html>
+    </div>
+    </body>
+    </html>
