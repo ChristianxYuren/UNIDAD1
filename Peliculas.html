@@ -10,7 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <link href="https://fonts.cdnfonts.com/css/skuer" rel="stylesheet">
                 
-    <title>review</title>
+    <title>Peliculas de Christian</title>
 
 </head>
     <body>
@@ -79,7 +79,7 @@
                         <a class="dropdown-item"
                         href="json.html">JSON</a><br>
                         <a class="dropdown-item"
-                        href="tiendaPedido2.html">Tienda parte 2</a>
+                        href="TiendaPedido2.html">Tienda parte 2</a>
 
                         </div>
                             
@@ -111,5 +111,47 @@
 
     </header>
     <main id="main"></main>
+    <script>
+        const API_URL = 'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=3fd2be6f0c70a2a598f084ddfb75487c&page=1&#39';
+        const IMG_PATH = 'https://image.tmdb.org/t/p/w1280&#39';
+        const SEARCH_API = 'https://api.themoviedb.org/3/search/movie?api_key=3fd2be6f0c70a2a598f084ddfb75487c&query="&#39';
+
+        const main = document.getElementById('main');
+        const form = document.getElementById('form');
+        const seacrh = document.getElementById('seacrh');
+
+        //obtencion de las primeras peliculas 
+
+        getMovies(API_URL)
+
+async function getMovies(url){
+    const res = await fetch(url);
+    const data = awaitres.json();
+
+    showMovies(data.results)
+}
+function showMovies(movies){
+    main.innerHTML ='';
+
+    movies.forEach((movie) =>{
+        const {title, poster_path, vote_avarage,overview} = movie;
+        const MovieElements = document.createElement ('div');
+        MovieElements.classList.add('movie');
+        MovieElements.innerHTML= `
+        <img src  ="${IMG_PATH + poster_path}" alt = "${title}">
+        <div class ="movie-info">   
+            <h3>${title}</h3>
+            <span class = ${getClassByRate(vote_avarage)}>${vote_avarage}</span>
+            </div>
+            <div class = "overview">
+                <h3>Overiew</h3>
+                ${overview}
+                </div>
+                main.AppendChild(movieElements);
+            
+                ;
+    })
+}
+    </script>
 </body>
 </html>
