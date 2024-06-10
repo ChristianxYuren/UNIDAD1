@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <title>Christian API</title>
+
+</head>
+<body>
+<style>
+    body {
+         background-color: black;
+         width: 100%;
+         height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url('imgAPI/fondo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+         }
+         h1	{
+             font-size: 60px;
+             color: white;
+             text-align: center;
+             
+         }
+         #personajes{
+             display: grid;
+             grid-template-columns: repeat(3, 3fr);
+             width: 100px;
+             height: auto;
+             
+         }
+         .personaje{
+             border: 4px solid red;
+             padding: 50px;
+             text-align: center;
+             margin: 0px 80px 20px;
+         }
+         .personaje img{
+             width: 250px;
+             height: auto;
+             border: 2px solid  white;
+           
+         }
+         .personaje h2{
+             font-size: 25px;
+             text-align: center;
+             background-color: gray;
+             color: white;
+             font-family:cursive;
+ 
+         }
+         .letra{
+             color: white;
+              font-size: 80px;
+              text-shadow: 4px 4px white;
+              -webkit-text-stroke-color: red;
+              -webkit-text-stroke-width: 1px;
+              color: black;
+         }
+         .imgpersonaje{
+            width: 180px;
+            height: 400px; 
+         }
+
+         .imgescudo{
+            width: 180px;
+            height: 180px;
+         }
+         .imgstaff{
+            width: auto;
+            height: 150px;
+         }
+         button{
+            background-color: transparent;
+            border: 0;
+         }
+     </style>
+    <div style="margin :24px;">
+        <nav class="nav navbar-light" style ="background-color: black;"> 
+            <div class="container">
+                <a class="navbar-brand" href="index.html" style="color: aqua;">INICIO</a>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="nav navbar-nav">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Unidad 1</a>
+                            <div class="dropdown-menu"
+                            aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                        href="PERFIL.html">Perfil</a><br>
+                        <a class="dropdown-item"
+                        href="calculadora.html">Calculadora</a><br>
+                        <a class="dropdown-item"
+                        href="tienda.html">Tienda </a>
+
+                        </div>
+                            
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false" >Unidad 2</a>
+                            <div class="dropdown-menu"
+                            aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                        href="TiendaPedido.html">tienda pedido</a><br>
+                        <a class="dropdown-item"
+                        href="json.html">JSON</a><br>
+                        <a class="dropdown-item"
+                        href="TiendaPedido2.html">Tienda parte 2</a>
+
+                        </div>
+                            
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false" >Unidad 3</a>
+                            <div class="dropdown-menu"
+                            aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item"
+                        href="basededatos.html">base de datos</a><br>
+                        <a class="dropdown-item"
+                        href="peliculas.html">Peliculas</a><br>
+                       
+                        </div>
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </div>
+    <marquee class="letra">HARRY POTTER</marquee>
+
+   <button id="loadData"><img src="imgAPI/personaje.png" alt="basededatos" class="imgpersonaje"></button>   
+    <button id="loadDatastudents"><img src="imgAPI/estudiantes.webp" alt="basededatos" class="imgescudo"></button>
+    <button id="loadDataHouse1"><img src="imgAPI/gryffindor.png" alt="basededatos" class="imgescudo"></button>    
+    <button id="loadDataHouse2"><img src="imgAPI/slytherin.png" alt="basededatos" class="imgescudo"></button>
+    <button id="loadDataHouse3"><img src="imgAPI/hufflepuff.png" alt="basededatos" class="imgescudo"></button>
+    <button id="loadDataHouse4"><img src="imgAPI/ravenclaw.png" alt="basededatos" class="imgescudo"></button>
+    <button id="loadDatastaff"><img src="imgAPI/staff.png" alt="basededatos" class="imgstaff"></button>
+    <button id="loadDatashechizos"><img src="imgAPI/hechizos.png" alt="basededatos" class="imgescudo"></button>
+    <div id="personajes"></div>
+
+
+
+ <script>
+     const url= "https://hp-api.herokuapp.com/api/characters/";
+
+    document.getElementById("loadData").addEventListener("click", () => {
+            fetch(url)
+                .then((res) => res.json())
+                .then((data) => {
+                    let content = "";
+                    data.forEach(personaje => {
+                        content += `
+                            <div class="personaje">
+                                <h2>${personaje.name}</h2>
+                                <img src="${personaje.image}" alt="${personaje.name}"/>
+                                <h2>${personaje.house}</h2>
+                                <h2>${personaje.species}</h2>
+                                <h2>${personaje.yearOfBirth}</h2>
+                                <h2>${personaje.gender}</h2>
+                            </div>
+                        `;
+                    });
+                    document.getElementById("personajes").innerHTML = content;
+                });
+        });
+
+ </script>
+ <script>
+    
+    const urlStudents =  "https://hp-api.herokuapp.com/api/characters/students"
+
+document.getElementById("loadDatastudents").addEventListener("click", () => {
+fetch(urlStudents)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+content += `<div class="personaje"> 
+<h2>${personaje.name}</h2>
+<img src="${personaje.image}"/>
+<h2>${personaje.house}</h2>
+<h2>${personaje.species}</h2> 
+<h2>${personaje.actor}</h2> 
+<h2>${personaje.dateOfBirth}</h2> 
+<h2>${personaje.gender}</h2> 
+</div>`;
+
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+ </script>
+ <script>
+    const urlhouse1= "https://hp-api.herokuapp.com/api/characters/house/gryffindor";
+
+document.getElementById("loadDataHouse1").addEventListener("click", () => {
+fetch(urlhouse1)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+    content += `<div class="personaje"> 
+    <h2>${personaje.name}</h2>
+    <img src="${personaje.image}"/>
+    <h2>${personaje.house}</h2>
+    <h2>${personaje.species}</h2> 
+    <h2>${personaje.actor}</h2> 
+    <h2>${personaje.dateOfBirth}</h2> 
+    <h2>${personaje.gender}</h2> 
+    </div>`;
+    
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+
+ </script>
+  <script>
+    const urlhouse2= "https://hp-api.herokuapp.com/api/characters/house/slytherin";
+
+document.getElementById("loadDataHouse2").addEventListener("click", () => {
+fetch(urlhouse2)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+    content += `<div class="personaje"> 
+    <h2>${personaje.name}</h2>
+    <img src="${personaje.image}"/>
+    <h2>${personaje.house}</h2>
+    <h2>${personaje.species}</h2> 
+    <h2>${personaje.actor}</h2> 
+    <h2>${personaje.dateOfBirth}</h2> 
+    <h2>${personaje.gender}</h2> 
+    </div>`;
+    
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+
+ </script>
+  <script>
+    const urlhouse3= "https://hp-api.herokuapp.com/api/characters/house/hufflepuff";
+
+document.getElementById("loadDataHouse3").addEventListener("click", () => {
+fetch(urlhouse3)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+    content += `<div class="personaje"> 
+    <h2>${personaje.name}</h2>
+    <img src="${personaje.image}"/>
+    <h2>${personaje.house}</h2>
+    <h2>${personaje.species}</h2> 
+    <h2>${personaje.actor}</h2> 
+    <h2>${personaje.dateOfBirth}</h2> 
+    <h2>${personaje.gender}</h2> 
+    </div>`;
+    
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+
+ </script>
+  <script>
+    const urlhouse4= "https://hp-api.herokuapp.com/api/characters/house/ravenclaw";
+
+document.getElementById("loadDataHouse4").addEventListener("click", () => {
+fetch(urlhouse4)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+    content += `<div class="personaje"> 
+    <h2>${personaje.name}</h2>
+    <img src="${personaje.image}"/>
+    <h2>${personaje.house}</h2>
+    <h2>${personaje.species}</h2> 
+    <h2>${personaje.actor}</h2> 
+    <h2>${personaje.dateOfBirth}</h2> 
+    <h2>${personaje.gender}</h2> 
+    </div>`;
+    
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+
+ </script>
+ <script>
+ const urlstaff="https://hp-api.herokuapp.com/api/characters/staff";
+
+document.getElementById("loadDatastaff").addEventListener("click", () => {
+fetch(urlstaff)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+   content += `<div class="personaje"> 
+   <h2>${personaje.name}</h2>
+   <img src="${personaje.image}"/>
+   <h2>${personaje.house}</h2>
+   <h2>${personaje.species}</h2> 
+   <h2>${personaje.actor}</h2> 
+   <h2>${personaje.dateOfBirth}</h2> 
+   <h2>${personaje.gender}</h2> 
+   </div>`;
+   
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+
+ </script>
+ <script>
+    const urlhechizos="https://hp-api.herokuapp.com/api/spells";
+
+document.getElementById("loadDatashechizos").addEventListener("click", () => {
+fetch(urlhechizos)
+.then((res) => res.json())
+.then((data) => {
+content = ""
+data.forEach(personaje => {
+   content += `<div class="personaje"> 
+   <h2>${personaje.name}</h2>
+   <h2>${personaje.description}</h2>
+
+   </div>`;
+   
+});
+document.getElementById("personajes").innerHTML = content;
+});
+});
+ </script>
+    </body>
+    </html>
